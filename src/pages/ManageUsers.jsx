@@ -16,7 +16,6 @@ const ManageUsers = () => {
   const [userToDelete, setUserToDelete] = useState(null);
 
  
-  const isDemoUser = (localStorage.getItem("user") || "").includes("admins@gmail.com");
 
   const fetchUsers = async () => {
     try {
@@ -37,23 +36,12 @@ const ManageUsers = () => {
   // --- DELETE HANDLER (FIXED) ---
   const handleDeleteClick = (id, name) => {
 
-    if (isDemoUser) {
-        toast.error("Demo Mode: You cannot delete users!");
-        return;
-    }
-  
-
     setUserToDelete({ id, name });
     setModalOpen(true);
   };
 
   // --- ROLE UPDATE HANDLER (FIXED) ---
   const handleRoleUpdate = async (id, currentRole) => {
-
-    if (isDemoUser) {
-        toast.error("Demo Mode: Role update disabled!");
-        return;
-    }
 
     const newRole = currentRole === "admin" ? "user" : "admin";
     try {
@@ -71,11 +59,6 @@ const ManageUsers = () => {
   };
 
   const confirmDelete = async () => {
-
-    if (isDemoUser) { 
-        setModalOpen(false);
-        return; 
-    }
 
     if (!userToDelete) return;
 
@@ -101,12 +84,6 @@ const ManageUsers = () => {
 
   return (
     <div className="p-6 md:p-10 max-w-[1400px] mx-auto min-h-screen bg-[#01040D] text-white">
-
-      {isDemoUser && (
-        <div className="bg-red-600/20 border border-red-500 text-red-500 p-4 rounded-xl mb-8 text-center font-black tracking-widest animate-pulse">
-          ⚠ DEMO MODE ACTIVE: EDIT & DELETE DISABLED ⚠
-        </div>
-      )}
 
       <div className="mb-12 text-center">
         <h1 className="text-4xl font-black uppercase tracking-widest text-white mb-2">
@@ -156,27 +133,17 @@ const ManageUsers = () => {
                   <button
                     onClick={() => handleRoleUpdate(user._id, user.role)}
                     disabled={actionLoading === user._id} 
-                    className={`flex-1 py-3 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all ${
-                      isDemoUser 
-                        ? "bg-gray-800 text-gray-500 border-gray-700 hover:bg-gray-700 cursor-not-allowed" 
-                        : "bg-white/5 hover:bg-white/10 border-white/10"
-                    }`}
+                    className="flex-1 py-3 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all bg-white/5 hover:bg-white/10 border-white/10"
                   >
-                    {isDemoUser ? <Lock className="w-4 h-4 mx-auto" /> : (
-                        actionLoading === user._id ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : (user.role === 'admin' ? 'Demote' : 'Make Admin')
-                    )}
+                    {actionLoading === user._id ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : (user.role === 'admin' ? 'Demote' : 'Make Admin')}
                   </button>
 
                   {/* DELETE BUTTON - Updated logic applied */}
                   <button
                     onClick={() => handleDeleteClick(user._id, user.name)}
-                    className={`px-5 rounded-xl border transition-all ${
-                      isDemoUser 
-                        ? "bg-gray-800 text-gray-500 border-gray-700 hover:bg-gray-700 cursor-not-allowed" 
-                        : "bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border-red-500/20"
-                    }`}
+                    className="px-5 rounded-xl border transition-all bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border-red-500/20"
                   >
-                    {isDemoUser ? <Lock className="w-4 h-4" /> : <Trash2 className="w-4 h-4" />}
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </motion.div>

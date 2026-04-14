@@ -9,7 +9,7 @@ import {
   Fingerprint, Calendar, Cpu, Zap, Radio, 
   UserPen 
 } from "lucide-react";
-import Swal from "sweetalert2"; 
+ 
 
 const AdminProfile = () => {
   const { user } = useAuth();
@@ -39,24 +39,6 @@ const AdminProfile = () => {
   }, [user]);
 
   const handleUpdateClick = () => {
-    
- 
-    const restrictedEmails = ["admins@gmail.com", "admin@gmail.com", "manager@gmail.com", "ta@gmail.com"];
-
-
-    if (user && restrictedEmails.includes(user.email)) {
-       Swal.fire({
-         title: "Security Alert! 🛡️",
-         text: "This is a Demo Admin account for LinkedIn display. You cannot modify profile details.",
-         icon: "error",
-         confirmButtonColor: "#EF4444",
-         background: "#111827",
-         color: "#fff",
-       });
-       return;
-    }
-
-
     navigate("/dashboard/profile"); 
   };
 

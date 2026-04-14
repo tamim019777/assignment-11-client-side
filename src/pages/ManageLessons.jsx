@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { FaTrash, FaStar, FaEye, FaLock, FaGlobe, FaSearch, FaFilter, FaDatabase, FaBolt } from "react-icons/fa";
 import { getAdminLessons, adminDeleteLesson, toggleFeatured } from "../utils/api";
 import LoadingSpinner from "../components/LoadingSpinner";
-import Swal from "sweetalert2";
 
 const ManageLessons = () => {
   const { user } = useAuth();
@@ -57,31 +56,7 @@ const ManageLessons = () => {
   }, [filterCategory, filterVisibility, searchQuery, lessons]);
 
 
-  const checkDemoSecurity = () => {
-
-    const userEmail = user?.email || JSON.parse(localStorage.getItem("user"))?.email;
-
-
-    const restrictedEmails = ["admins@gmail.com"]; 
-
-    if (userEmail && restrictedEmails.includes(userEmail)) {
-      Swal.fire({
-        title: "Access Denied! 🛡️",
-        text: "You are in Demo Mode (Read-Only). You cannot Edit or Delete live data.",
-        icon: "warning",
-        confirmButtonColor: "#EF4444",
-        background: "#1F2937",
-        color: "#fff",
-      });
-      return true; 
-    }
-    return false; 
-  };
-
   const handleToggleFeatured = async (id, currentStatus) => {
- 
-    if (checkDemoSecurity()) return;
-
     try {
       setActionLoading(true);
       const updatedStatus = !currentStatus;
@@ -96,10 +71,6 @@ const ManageLessons = () => {
   };
 
   const handleDelete = async (id) => {
- 
-    if (checkDemoSecurity()) return;
-
-
     if (!window.confirm("⚠️ This will permanently delete the lesson. Are you sure?")) return;
     
     try {

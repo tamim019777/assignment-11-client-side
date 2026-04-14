@@ -30,25 +30,6 @@ const ManagerHome = () => {
 
   const handleDeleteTask = (id) => {
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    
-    
-    const restrictedEmails = ["admin@gmail.com", "ta@gmail.com", "tamim123@gmail.com", "manager@gmail.com"];
-
- 
-    if (user && restrictedEmails.includes(user.email)) {
-       Swal.fire({
-         title: "Action Restricted",
-         text: "This is a Manager Demo account. You cannot delete tasks.",
-         icon: "error",
-         confirmButtonColor: "#EF4444",
-         background: "#1e1b2c",
-         color: "#fff",
-       });
-       return; 
-    }
-
-  
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
 import { FaUserCircle, FaEnvelope, FaPhone, FaCalendarAlt, FaStar, FaCogs, FaEdit } from "react-icons/fa";
-import Swal from "sweetalert2"; 
+ 
 
 const formatDate = (timestamp) => {
   if (!timestamp) return "Data Nots Found";
@@ -22,22 +22,6 @@ const Profile = ({ user, isPremium }) => {
   const creationTime = user?.metadata?.creationTime || user?.createdAt;
   
   const handleUpdateClick = () => {
-
-    const restrictedEmails = ["admin@gmail.com", "ta@gmail.com", "tamim123@gmail.com", "manager@gmail.com"];
-
- 
-    if (user && restrictedEmails.includes(user.email)) {
-       Swal.fire({
-         title: "Action Restricted",
-         text: "This is a demo account. You cannot modify profile details.",
-         icon: "error",
-         confirmButtonColor: "#EF4444",
-         background: "#111827", 
-         color: "#fff",
-       });
-       return; 
-    }
-
     navigate("/dashboard/update-profile");
   };
 

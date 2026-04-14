@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-hot-toast";
-import Swal from "sweetalert2"; 
+ 
 
 const UserProfile = () => {
     const { user, updateUserProfile } = useAuth();
@@ -9,22 +9,6 @@ const UserProfile = () => {
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-
-       
-        const restrictedEmails = ["admin@gmail.com", "ta@gmail.com", "tamim123@gmail.com"];
-
-        if (user && restrictedEmails.includes(user.email)) {
-            Swal.fire({
-                title: "Action Restricted",
-                text: "This is a demo account. You cannot modify profile details.",
-                icon: "error",
-                confirmButtonColor: "#EF4444",
-                background: "#111827",
-                color: "#fff",
-            });
-            return;
-        }
-
 
         setLoading(true);
         const name = e.target.name.value;

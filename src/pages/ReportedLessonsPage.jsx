@@ -4,7 +4,6 @@ import { toast } from "react-hot-toast";
 import { getReportedLessons } from "../utils/api";
 import { useAuth } from "../contexts/AuthContext"; 
 import LoadingPage from "./LoadingPage";
-import Swal from "sweetalert2";
 
 const ReportedLessonsPage = () => {
   const { user } = useAuth();
@@ -30,32 +29,7 @@ const ReportedLessonsPage = () => {
   }, []);
 
 
-  const checkDemoSecurity = () => {
-
-    const userEmail = user?.email || JSON.parse(localStorage.getItem("user"))?.email;
-
-   
-    const restrictedEmails = ["admins@gmail.com"];
-
-    if (userEmail && restrictedEmails.includes(userEmail)) {
-      Swal.fire({
-        title: "Access Denied! 🛡️",
-        text: "You are in Demo Mode (Read-Only). You cannot resolve or delete live reports.",
-        icon: "warning",
-        confirmButtonColor: "#EF4444",
-        background: "#111827", 
-        color: "#fff",
-      });
-      return true;
-    }
-    return false;
-  };
-
   const handleActionClick = (id) => {
-
-    if (checkDemoSecurity()) return;
-
-
     setReportedLessons((currentList) => currentList.filter((item) => item._id !== id));
     toast.success("Successfully Processed!");
   };
